@@ -1,0 +1,20 @@
+# Компиляция и билды
+build/
+cmake-build-*/
+*.o
+*.exe
+*.out
+
+# IDE
+.vscode/
+.idea/
+*.user
+
+# Файлы с данными (ваш tasks.json)
+*.json
+*.db
+*.sqlite
+
+# Системные файлы
+.DS_Store
+Thumbs.db
