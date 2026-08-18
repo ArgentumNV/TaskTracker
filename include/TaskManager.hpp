@@ -17,5 +17,9 @@ namespace tmtk
         void addTask(const std::string &desc);
 
         void list() const;
+        void list_pending() const;
+
+        void mark_task_done(unsigned int id);
+        bool deleteTask(unsigned int id);
     };
 }

@@ -72,28 +72,104 @@ int main(void)
 
         else if (command == "add")
         {
-            std::string data{parts[1]};
-            manager.addTask(data);
+            if (parts.size() < 2)
+            {
+                std::cout << "❌ Укажите описание: add <описание>\n";
+                continue;
+            }
+
+            std::string description;
+            for (size_t i = 1; i < parts.size(); ++i)
+            {
+                if (!description.empty())
+                    description += " ";
+                description += parts[i];
+            }
+
+            manager.addTask(description);
         }
         else if (command == "list")
         {
-            manager.list();
-        }
-        else if (command == "list pending")
-        {
+            if (parts.size() == 2 && parts[1] == "pending")
+            {
+                manager.list_pending();
+            }
+            else if (parts.size() == 2 && parts[1] != "pending")
+            {
+                std::cout << "Unknown command: Please try again" << '\n';
+            }
+            else if (parts.size() == 1)
+            {
+                manager.list();
+            }
         }
         else if (command == "done")
         {
+            if (parts.size() == 1)
+            {
+                std::cout << "Введите ID задачи\n";
+            }
+            else
+            {
+                unsigned long tmp{};
+                try
+                {
+                    tmp = std::stoul(parts[1]);
+                }
+                catch (const std::invalid_argument &e)
+                {
+                    std::cout << "Ошибка: строка не является числом" << '\n';
+                    continue;
+                }
+                catch (const std::out_of_range &e)
+                {
+                    std::cout << "Ошибка: строка не является числом" << '\n';
+                    continue;
+                }
+
+                unsigned int id{static_cast<unsigned int>(tmp)};
+
+                manager.mark_task_done(id);
+            }
         }
         else if (command == "delete")
         {
+            if (parts.size() == 1)
+            {
+                std::cout << "Введите ID задачи\n";
+            }
+            else
+            {
+                unsigned long tmp{};
+                try
+                {
+                    tmp = std::stoul(parts[1]);
+                }
+                catch (const std::invalid_argument &e)
+                {
+                    std::cout << "Ошибка: строка не является числом" << '\n';
+                    continue;
+                }
+                catch (const std::out_of_range &e)
+                {
+                    std::cout << "Ошибка: строка не является числом" << '\n';
+                    continue;
+                }
+                unsigned int id{static_cast<unsigned int>(tmp)};
+                if (manager.deleteTask(id))
+                {
+                    std::cout << "Задача с ID: " << id << " успешно удалена.\n";
+                }
+                else
+                {
+                    std::cout << "Задача с ID: " << id << " не удалена.\n";
+                }
+            }
         }
         else
         {
             std::cout << "Unknown command: Please try again" << '\n';
         }
-
-        // std::cout << command << '\n';
     }
 
     return 0;
