@@ -10,6 +10,7 @@ add_executable(task_manager
     src/main.cpp
     src/Task.cpp
     src/TaskManager.cpp
+    src/FileHandler.cpp
 )
 
 if(NOT CMAKE_BUILD_TYPE)

@@ -1,5 +1,6 @@
 #include "../include/Task.hpp"
 #include "../include/TaskManager.hpp"
+#include "../include/FileHandler.hpp"
 
 #include <string>
 #include <iostream>
@@ -48,6 +49,8 @@ int main(void)
     std::cout << "Welcome to my TaskManager" << '\n';
     tmtk::TaskManager manager{};
     // загрузка из json в manager
+
+    tmtk::FileHandler filehandler{manager};
 
     while (true)
     {
